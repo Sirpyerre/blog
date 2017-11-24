@@ -60,6 +60,16 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 		'as' => 'post.restore'
 	]);
 
+	Route::get('/post/edit/{id}', [
+		'uses' => 'PostController@edit',
+		'as' => 'post.edit'
+	]);
+
+	Route::post('/post/update/{id}', [
+		'uses' => 'PostController@update',
+		'as' => 'post.update'
+	]);
+
 	Route::get('category/create', [
 		'uses' => 'CategoriesController@create',
 		'as' => 'category.create'
@@ -87,6 +97,26 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 	Route::post('/category/update/{id}', [
 		'uses' => 'CategoriesController@update',
 		'as' => 'category.update'
+	]);
+
+	Route::get('/tags',[
+		'uses' => 'TagsController@index',
+		'as' => 'tags'
+	]);
+
+	Route::get('/tag/edit/{id}',[
+		'uses' => 'TagsController@edit',
+		'as' => 'tag.edit'
+	]);
+
+	Route::post('/tag/update/{id}',[
+		'uses' => 'TagsController@update',
+		'as' => 'tag.update'
+	]);
+
+	Route::get('/tag/delete/{id}',[
+		'uses' => 'TagsController@delete',
+		'as' => 'tag.delete'
 	]);
 
 });

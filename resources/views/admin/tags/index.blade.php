@@ -3,33 +3,33 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Categorías
+		Tags
 	</div>
 	<div class="panel-body">
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>Name</th>
+					<th>Nombre</th>
 					<th>Editar</th>
 					<th>Borrar</th>
 					
 				</tr>
 			</thead>
 			<tbody>
-				@if($categories->count())
-					@foreach($categories as $category)
+				@if($tags->count())
+					@foreach($tags as $tag)
 						<tr>
 							<td>
-								{{ $category->name }}
+								{{ $tag->tag }}
 							</td>
 							<td>
-								<a href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-xs btn-info">
+								<a href="{{ route('tags.edit', ['id' => $tag->id]) }}" class="btn btn-xs btn-info">
 									Edit
 								</a>
 							</td>
 
 							<td>
-								<a href="{{ route('category.delete', ['id' => $category->id]) }}" class="btn btn-xs btn-danger">
+								<a href="{{ route('tags.delete', ['id' => $tag->id]) }}" class="btn btn-xs btn-danger">
 									Delete
 								</a>
 							</td>
@@ -37,7 +37,7 @@
 					@endforeach
 				@else
 					<tr>
-						<td colspan="5" class="text-center">No hay categorias</td>
+						<td colspan="5" class="text-center">No hay tags todavia</td>
 					</tr>
 				@endif
 			</tbody>

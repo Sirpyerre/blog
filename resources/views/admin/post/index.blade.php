@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="panel panel-defaul">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Post publicados
+	</div>
 	<div class="panel-body">
 		<table class="table table-hover">
 			<thead>
@@ -14,28 +17,34 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($posts as $post)
+				@if($posts->count())
+					@foreach($posts as $post)
+						<tr>
+							<td>
+								<img src="{{ $post->featured }}" alt="{{ $post->title }}" width="90px" height="50px">
+							</td>
+							<td>
+								{{ $post->title }}
+							</td>
+							<td>
+								<a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-xs btn-info">
+									Editar
+								</a>
+							</td>
+
+							<td>
+								<a href="{{ route('post.delete', ['id' => $post->id]) }}" class="btn btn-xs btn-danger">
+									Borrar
+								</a>
+							</td>
+
+						</tr>
+					@endforeach
+				@else
 					<tr>
-						<td>
-							<img src="{{ $post->featured }}" alt="{{ $post->title }}" width="90px" height="50px">
-						</td>
-						<td>
-							{{ $post->title }}
-						</td>
-						<td>
-							{{-- <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-xs btn-info"> --}}
-								Editar
-							{{-- </a> --}}
-						</td>
-
-						<td>
-							<a href="{{ route('post.delete', ['id' => $post->id]) }}" class="btn btn-xs btn-danger">
-								Borrar
-							</a>
-						</td>
-
+						<td colspan="5" class="text-center">No hay posts</td>
 					</tr>
-				@endforeach
+				@endif
 			</tbody>
 		</table>
 	</div>
