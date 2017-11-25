@@ -140,11 +140,27 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 	Route::get('/users/admin/{id}',[
 		'uses' => 'UsersController@admin',
 		'as' => 'user.admin'
-	]);
+	])->middleware('admin');
 
 	Route::get('/users/not-admin/{id}',[
 		'uses' => 'UsersController@not_admin',
 		'as' => 'user.not.admin'
 	]);
+
+	Route::get('/users/profile',[
+		'uses' => 'ProfilesController@index',
+		'as' => 'user.profile'
+	]);
+
+	Route::get('/users/delete/{id}',[
+		'uses' => 'UsersController@destroy',
+		'as' => 'user.delete'
+	]);
+
+	Route::post('/users/profile/update',[
+		'uses' => 'ProfilesController@update',
+		'as' => 'user.profile.update'
+	]);
+
 
 });

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use Auth;
 use Session;
 
-class CategoriesController extends Controller
+class ProfilesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index')->with('categories', Category::all());
+        return view('admin.users.profile')->with('user', Auth::user());
     }
 
     /**
@@ -25,7 +25,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        //
     }
 
     /**
@@ -36,18 +36,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
-
-        $category = new Category;
-
-        $category->name = $request->name;
-        $category->save();
-
-        Session::flash('success', 'Has creado la categoria correctamente');
-
-        return redirect()->route('categories');
+        //
     }
 
     /**
@@ -69,9 +58,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-
-        return view('admin.categories.edit')->with('category',$category);
+        //
     }
 
     /**
@@ -81,16 +68,45 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $category = Category::find($id);
+        $this->validate($request, [
+        
+            'name' => 'required',
+            'email' => 'required|email',
+            'facebook' => 'required|url',
+            'youtube' => 'required|url',
+        ]);
 
-        $category->name = $request->name;
-        $category->save();
+        $user = Auth::user();
 
-        Session::flash('success', 'Has editado la categoria correctamente');
+        if($request->hasFile('avatar')){
+            $avatar = $request->avatar;
+            $avatar_new_name = time().$avatar->getClientOriginalName();
+            $avatar->move('uploads/avatars/', $avatar_new_name);
 
-        return redirect()->route('categories');
+            $user->profile->avatar = 'uploads/avatars/'.$avatar_new_name;
+            $user->profile->save();
+        }
+
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        
+        $user->profile->facebook = $request->facebook;
+        $user->profile->youtube  = $request->youtube;
+        $user->profile->about  = $request->about;
+
+        $user->save();
+        $user->profile->save();
+
+        if($request->has('password')){
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }
+
+        Session::flash('success', 'Se ha actualizado tu perfil');
+
+        return redirect()->back();
     }
 
     /**
@@ -101,19 +117,6 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-
-        foreach ($category->posts as $post) {
-            // $post->delete();
-            $post->forceDelete();
-        }
-
-        $category->delete();
-
-        Session::flash('success', 'Has eliminado la categoria correctamente');
-
-        return redirect()->route('categories');
-
+        //
     }
 }

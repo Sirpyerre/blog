@@ -9,6 +9,12 @@ use Session;
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -100,7 +106,15 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->profile->delete();
+
+        $user->delete();
+
+        Session::flash('success', 'Se ha eliminado la cuenta del usuario');
+
+        return redirect()->back();
     }
 
     public function admin($id)

@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -79,14 +81,21 @@
                         <li class="list-group-item">
                             <a href="{{ route('home')}}">Inicio</a>
                         </li>
-                        <li class="list-group-item">
-                            <a href="{{ route('users')}}">Usuarios</a>
-                        </li>
+
+                        @if (Auth::user()->admin)
+                            <li class="list-group-item">
+                                <a href="{{ route('users')}}">Usuarios</a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <a href="{{ route('user.create')}}">Nuevo Usuario</a>
+                            </li>
+                        @endif
 
                         <li class="list-group-item">
-                            <a href="{{ route('user.create')}}">Nuevo Usuario</a>
+                            <a href="{{ route('user.profile')}}">Mi Perfil</a>
                         </li>
-                        
+
                         <li class="list-group-item">
                             <a href="{{ route('categories')}}">Categorias</a>
                         </li>
@@ -136,6 +145,8 @@
             toastr.info("{{ Session::get('info') }}")
         @endif
     </script>
+
+    @yield('scripts')
 
 </body>
 </html>
