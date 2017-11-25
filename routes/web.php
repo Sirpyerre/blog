@@ -1,15 +1,8 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/test', function(){
+	return App\Profile::find(1)->user;
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -104,6 +97,16 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 		'as' => 'tags'
 	]);
 
+	Route::get('/tag/create', [
+		'uses' => 'TagsController@create',
+		'as' => 'tag.create'
+	]);
+
+	Route::post('/tag/store',[
+		'uses' => 'TagsController@store',
+		'as' => 'tag.store'
+	]);
+
 	Route::get('/tag/edit/{id}',[
 		'uses' => 'TagsController@edit',
 		'as' => 'tag.edit'
@@ -115,8 +118,33 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 	]);
 
 	Route::get('/tag/delete/{id}',[
-		'uses' => 'TagsController@delete',
+		'uses' => 'TagsController@destroy',
 		'as' => 'tag.delete'
+	]);
+
+	Route::get('/users',[
+		'uses' => 'UsersController@index',
+		'as' => 'users'
+	]);
+
+	Route::get('/users/create',[
+		'uses' => 'UsersController@create',
+		'as' => 'user.create'
+	]);
+
+	Route::post('/users/store',[
+		'uses' => 'UsersController@store',
+		'as' => 'user.store'
+	]);
+
+	Route::get('/users/admin/{id}',[
+		'uses' => 'UsersController@admin',
+		'as' => 'user.admin'
+	]);
+
+	Route::get('/users/not-admin/{id}',[
+		'uses' => 'UsersController@not_admin',
+		'as' => 'user.not.admin'
 	]);
 
 });

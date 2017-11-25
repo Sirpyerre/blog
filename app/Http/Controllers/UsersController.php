@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\User;
+use App\Profile;
 use Illuminate\Http\Request;
 use Session;
 
-class TagsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class TagsController extends Controller
      */
     public function index()
     {
-        return view('admin.tags.index')->with('tags',Tag::all());
+        return view('admin.users.index')->with('users',User::all());
     }
 
     /**
@@ -25,7 +26,7 @@ class TagsController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -36,18 +37,25 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request,[
-            'tag' => 'required'
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email'
         ]);
 
-        Tag::Create([
-            'tag' => $request->tag
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('password')
         ]);
 
-        Session::flash('success', 'Se ha creado la etiqueta');
+        Profile::create([
+            'user_id' => $user->id,
+            'avatar' => 'uploads/avatars/users-emoji.png'
+        ]);
 
-        return redirect()->route('tags');
+        Session::flash('success', 'Se ha agregado el usuario');
+
+        return redirect()->route('users');
     }
 
     /**
@@ -69,9 +77,7 @@ class TagsController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-
-        return view('admin.tags.edit')->with('tag',$tag);
+        //
     }
 
     /**
@@ -83,19 +89,7 @@ class TagsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $this->validate($request,[
-            'tag' => 'required'
-        ]);
-
-        $tag = Tag::find($id);
-        $tag->tag = $request->tag;
-        $tag->save();
-
-        Session::flash('success', 'Se ha editado la etiqueta');
-
-        return redirect()->route('tags');
-
+        //
     }
 
     /**
@@ -106,11 +100,28 @@ class TagsController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::destroy($id);
+        //
+    }
 
-        Session::flash('success', 'Se ha eliminado la etiqueta');
+    public function admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 1;
+        $user->save();
+
+        Session::flash('success', 'Se ha cambiado los permisos');
 
         return redirect()->back();
-     
+    }
+
+    public function not_admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 0;
+        $user->save();
+
+        Session::flash('success', 'Se ha cambiado los permisos');
+
+        return redirect()->back();
     }
 }

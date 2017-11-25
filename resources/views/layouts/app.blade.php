@@ -80,10 +80,22 @@
                             <a href="{{ route('home')}}">Inicio</a>
                         </li>
                         <li class="list-group-item">
+                            <a href="{{ route('users')}}">Usuarios</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="{{ route('user.create')}}">Nuevo Usuario</a>
+                        </li>
+                        
+                        <li class="list-group-item">
                             <a href="{{ route('categories')}}">Categorias</a>
                         </li>
                         <li class="list-group-item">
                             <a href="{{ route('tags')}}">Tags</a>
+                        </li>
+                        
+                        <li class="list-group-item">
+                            <a href="{{ route('tag.create')}}">Nueva etiqueta</a>
                         </li>
 
                         <li class="list-group-item">

@@ -1,25 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-
 	@include('admin.includes.errors')
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Actualizar tag: {{ $tag->tag }}
+			Nueva Usuario
 		</div>
 		<div class="panel-body">
-			<form action="{{ route('tag.update', ['id'=>$tag->id]) }}" method="post">
+			<form action="{{ route('user.store') }}" method="post">
 				{{ csrf_field() }}
 
 				<div class="form-group">
 					<label for="name">Nombre</label>
-					<input type="text" name="tag" value="{{ $tag->tag }}" class="form-control">
+					<input type="text" name="name" class="form-control">
 				</div>
+
+				<div class="form-group">
+					<label for="name">Email</label>
+					<input type="text" name="email" class="form-control">
+				</div>
+
 				<div class="form-group">
 					<div class="text-center">
 						<button class="btn btn-success">
-							Actualizar tag
+							Guardar usuario
 						</button>
 					</div>
 				</div>
