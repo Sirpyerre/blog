@@ -85,7 +85,7 @@
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">{{ $first_post->category->name }}</a>
+                                            <a href="{{ route('category.single', ['id'=>$first_post->category->id]) }}">{{ $first_post->category->name }}</a>
                                         </span>
 
                                         <span class="post__comments">
@@ -139,7 +139,9 @@
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">{{ $second_post->category->name }}</a>
+                                            <a href="{{ route('category.single', ['id' => $second_post->category->id]) }}">
+                                                {{ $second_post->category->name }}
+                                            </a>
                                         </span>
 
                                         <span class="post__comments">
@@ -189,7 +191,9 @@
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">{{ $third_post->category->name }}</a>
+                                            <a href="{{ route('category.single', ['id'=>$third_post->category->id]) }}">
+                                                {{ $third_post->category->name }}
+                                            </a>
                                         </span>
 
                                         <span class="post__comments">
@@ -293,9 +297,9 @@
                     </div>
 
                     <div class="images-block">
-                        <img src="app/img/subscr-gear.png" alt="gear" class="gear">
-                        <img src="app/img/subscr1.png" alt="mail" class="mail">
-                        <img src="app/img/subscr-mailopen.png" alt="mail" class="mail-2">
+                        <img src="{{ asset('app/img/subscr-gear.png') }}" alt="gear" class="gear">
+                        <img src="{{ asset('app/img/subscr1.png') }}" alt="mail" class="mail">
+                        <img src="{{ asset('app/img/subscr-mailopen.png') }}" alt="mail" class="mail-2">
                     </div>
                 </div>
             </div>
