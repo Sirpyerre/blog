@@ -5,26 +5,36 @@
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Nueva Usuario
+			Editar datos del blog
 		</div>
 		<div class="panel-body">
-			<form action="{{ route('user.store') }}" method="post">
+			<form action="{{ route('settings.update') }}" method="post">
 				{{ csrf_field() }}
 
 				<div class="form-group">
 					<label for="name">Nombre</label>
-					<input type="text" name="name" class="form-control">
+					<input type="text" name="site_name" value="{{ $settings->site_name }}" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<label for="name">Dirección</label>
+					<input type="text" name="address" class="form-control" value="{{ $settings->address }}">
+				</div>
+
+				<div class="form-group">
+					<label for="name">Teléfono</label>
+					<input type="text" name="contact_number" class="form-control" value="{{ $settings->contact_number }}">
 				</div>
 
 				<div class="form-group">
 					<label for="name">Email</label>
-					<input type="text" name="email" class="form-control">
+					<input type="text" name="contact_email" class="form-control" value="{{ $settings->contact_email }}">
 				</div>
 
 				<div class="form-group">
 					<div class="text-center">
 						<button class="btn btn-success">
-							Guardar usuario
+							Actualizar datos
 						</button>
 					</div>
 				</div>

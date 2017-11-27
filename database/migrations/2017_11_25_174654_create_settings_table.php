@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->increments('id');
             $table->string('site_name');
             $table->string('contact_number');
+            $table->string('contact_email');
             $table->string('address');
 
             $table->timestamps();

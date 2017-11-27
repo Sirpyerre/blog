@@ -4,9 +4,10 @@ Route::get('/test', function(){
 	return App\Profile::find(1)->user;
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [
+	'uses' => 'FrontEndController@index',
+	'as' => 'index'
+]);
 
 Auth::routes();
 
@@ -162,5 +163,14 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function(){
 		'as' => 'user.profile.update'
 	]);
 
+	
+	Route::get('/settings',[
+		'uses' => 'SettingsController@index',
+		'as' => 'settings'
+	])->middleware('admin');
 
+	Route::post('/settings/update',[
+		'uses' => 'SettingsController@update',
+		'as' => 'settings.update'
+	])->middleware('admin');
 });

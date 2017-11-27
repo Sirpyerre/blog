@@ -11,6 +11,7 @@
 				<tr>
 					<th>Imagen</th>
 					<th>Título</th>
+					<th>Categoría</th>
 					<th>Editar</th>
 					<th>Restaurar</th>
 					
@@ -25,6 +26,9 @@
 							</td>
 							<td>
 								{{ $post->title }}
+							</td>
+							<td>
+								{{ $post->category->name }}
 							</td>
 							<td>
 								<a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-xs btn-info">
