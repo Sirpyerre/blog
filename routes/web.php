@@ -9,6 +9,28 @@ Route::get('/', [
     'as'   => 'index'
 ]);
 
+Route::post('/subscribe', function(){
+    $email = request('email');
+
+    Newsletter::subscribe($email);
+
+    Session::flash('subscribed', 'Successfully subscribed');
+    return redirect()->back();
+});
+
+Route::get('/results', function(){
+
+    $posts = \App\Post::where('title', 'like', '%'. request('query') .'%')->get();
+//    dd($posts);
+    return view('results')
+        ->with('posts',$posts)
+        ->with('title', 'Results for:'.request('query'))
+        ->with('categories', \App\Category::take(5)->get())
+        ->with('setting', \App\Setting::first())
+        ->with('query', request('query'));
+
+});
+
 Route::get('/post/{slug}', [
     'uses' => 'FrontEndController@singlePost',
     'as'   => 'post.single'

@@ -31,7 +31,7 @@ class ProfilesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +42,7 @@ class ProfilesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,7 +53,7 @@ class ProfilesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,42 +64,42 @@ class ProfilesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $this->validate($request, [
-        
-            'name' => 'required',
-            'email' => 'required|email',
+
+            'name'     => 'required',
+            'email'    => 'required|email',
             'facebook' => 'required|url',
-            'youtube' => 'required|url',
+            'youtube'  => 'required|url',
         ]);
 
         $user = Auth::user();
 
-        if($request->hasFile('avatar')){
-            $avatar = $request->avatar;
-            $avatar_new_name = time().$avatar->getClientOriginalName();
+        if ($request->hasFile('avatar')) {
+            $avatar          = $request->avatar;
+            $avatar_new_name = time() . $avatar->getClientOriginalName();
             $avatar->move('uploads/avatars/', $avatar_new_name);
 
-            $user->profile->avatar = 'uploads/avatars/'.$avatar_new_name;
+            $user->profile->avatar = 'uploads/avatars/' . $avatar_new_name;
             $user->profile->save();
         }
 
-        $user->name     = $request->name;
-        $user->email    = $request->email;
-        
+        $user->name  = $request->name;
+        $user->email = $request->email;
+
         $user->profile->facebook = $request->facebook;
         $user->profile->youtube  = $request->youtube;
-        $user->profile->about  = $request->about;
+        $user->profile->about    = $request->about;
 
         $user->save();
         $user->profile->save();
 
-        if($request->has('password')){
+        if ($request->has('password')) {
             $user->password = bcrypt($request->password);
             $user->save();
         }
@@ -112,7 +112,7 @@ class ProfilesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
