@@ -26,6 +26,9 @@ class FrontEndController extends Controller
     public function singlePost($slug)
     {
         $post = Post::where('slug', $slug)->first();
+
+// dd(request());
+
         $next_id = Post::where('id', '>', $post->id)->min('id');
         $prev_id = Post::where('id', '<', $post->id)->max('id');
 
